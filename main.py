@@ -12,7 +12,7 @@ def response(prompt):
     if "gemini deactivate" in prompt:
         speak("Ok, If you want to call me again, say Gemini.")
 
-    elif "show cheatsheet" in prompt:
+    elif "show cheat sheet" in prompt:
         webbrowser.open("https://github.com/Deshraj-Tiwari-Official/Gemini/blob/main/cheatsheet.md")
 
     elif "google search for " in prompt:
