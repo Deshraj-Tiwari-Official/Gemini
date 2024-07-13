@@ -1,4 +1,5 @@
 import platform
+import webbrowser
 import speech_recognition as sr
 import os
 from gtts import gTTS
@@ -8,8 +9,18 @@ recognizer = sr.Recognizer()
 
 
 def response(prompt):
-    if prompt == "hello gemini":
-        return speak("Hello, how are you?")
+    if "gemini deactivate" in prompt:
+        speak("Ok, If you want to call me again, say Gemini.")
+
+    elif "show cheatsheet" in prompt:
+        webbrowser.open("https://github.com/Deshraj-Tiwari-Official/Gemini/blob/main/cheatsheet.md")
+
+    elif "google search for " in prompt:
+        search_term = prompt.replace("google search for ", "")
+        webbrowser.open(f"https://google.com/search?q={search_term}")
+    else:
+        speak("I didn't get that. Try again by saying Gemini.")
+        play("./audios/gemini_start.mp3")
 
 
 def play(filename):
@@ -37,11 +48,12 @@ def listen_for_wake_word():
         try:
             with sr.Microphone() as src:
                 print("Listening for wake word...")
-                recognizer.adjust_for_ambient_noise(src, duration=1.0)
+                recognizer.adjust_for_ambient_noise(src)
 
-                call_audio = recognizer.listen(src, timeout=3.0)
+                call_audio = recognizer.listen(src, timeout=2.0)
                 call_command = recognizer.recognize_google(call_audio)
                 call_command = call_command.lower()
+                print(call_command)
 
                 if "hey gemini" in call_command:
                     return True
@@ -51,25 +63,28 @@ def listen_for_wake_word():
             print("Sorry, my speech service is down.")
         except sr.WaitTimeoutError:
             print("Timeout: No speech detected.")
+        except Exception as e:
+            print(f"Error: {e}")
 
 
 if __name__ == "__main__":
-    speak("Initializing Gemini...")
+    speak("Say Hey Gemini anytime to call for me. Enjoy your time.")
+    play("./audios/gemini_start.mp3")
 
     while True:
         if listen_for_wake_word():
-            speak("Hello, how can I help you?")
+            speak("Yes, how can I help you?")
             play("./audios/gemini_start.mp3")
             try:
                 with sr.Microphone() as source:
                     print("Listening...")
-                    recognizer.adjust_for_ambient_noise(source, duration=1.0)
+                    recognizer.adjust_for_ambient_noise(source)
 
                     try:
-                        audio = recognizer.listen(source, timeout=5.0)
+                        audio = recognizer.listen(source, 2.0)
                         command = recognizer.recognize_google(audio)
                         command = command.lower()
-                        print(command)
+                        print(">>", command)
                         response(command)
                     except sr.UnknownValueError or sr.WaitTimeoutError:
                         speak("Speech not detected. Please try again.")
