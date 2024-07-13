@@ -44,15 +44,13 @@ def listen_for_wake_word():
                 call_command = call_command.lower()
 
                 if "hey gemini" in call_command:
-                    play("./audios/gemini_start.mp3")
                     return True
         except sr.UnknownValueError:
-            pass
+            print("Sorry, I didn't understand that.")
         except sr.RequestError:
-            speak("Sorry, my speech service is down.")
-        except Exception as err:
-            speak("Some error occurred. Please try again.")
-            print(err)
+            print("Sorry, my speech service is down.")
+        except sr.WaitTimeoutError:
+            print("Timeout: No speech detected.")
 
 
 if __name__ == "__main__":
@@ -60,6 +58,8 @@ if __name__ == "__main__":
 
     while True:
         if listen_for_wake_word():
+            speak("Hello, how can I help you?")
+            play("./audios/gemini_start.mp3")
             try:
                 with sr.Microphone() as source:
                     print("Listening...")
@@ -71,11 +71,9 @@ if __name__ == "__main__":
                         command = command.lower()
                         print(command)
                         response(command)
-                    except sr.WaitTimeoutError:
-                        print("Timeout: No speech detected.")
-                    except sr.UnknownValueError:
-                        print("Sorry, I didn't understand that.")
+                    except sr.UnknownValueError or sr.WaitTimeoutError:
+                        speak("Speech not detected. Please try again.")
                     except sr.RequestError:
-                        print("Sorry, my speech service is down.")
+                        speak("Sorry, I'm currently facing some technical issue.")
             except Exception as e:
                 print(f"Error: {e}")
