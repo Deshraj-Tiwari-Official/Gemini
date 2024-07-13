@@ -10,7 +10,7 @@ recognizer = sr.Recognizer()
 
 def response(prompt):
     if "gemini deactivate" in prompt:
-        speak("Ok, If you want to call me again, say Gemini.")
+        speak("Ok, If you want to call me again, say Hey Gemini.")
 
     elif "show cheat sheet" in prompt:
         webbrowser.open("https://github.com/Deshraj-Tiwari-Official/Gemini/blob/main/cheatsheet.md")
