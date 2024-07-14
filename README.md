@@ -1,13 +1,13 @@
 # Gemini 💎 - Your Personal Assistant Bot
 
-Gemini is a Python-based personal assistant bot designed to help you with various tasks, including answering questions, managing tasks, and providing useful information. This bot leverages Natural Language Processing (NLP) to understand and respond to user queries.
+Gemini is a versatile Python-based personal assistant bot designed to help you with a wide range of tasks. Leveraging Natural Language Processing (NLP), Gemini can understand and respond to user queries, manage tasks, retrieve information, and much more.
 
 ## Features
 
-- **Voice Interaction:** Gemini can understand and respond to voice commands.
-- **Task Management:** Create, view, and manage your to-do lists.
-- **Information Retrieval:** Get answers to general questions, news, and more.
-- **Customizable Responses:** Tailor Gemini's responses to better suit your needs.
+- **Voice Interaction:** Understands and responds to voice commands.
+- **Task Management:** Allows you to create, view, and manage to-do lists.
+- **Information Retrieval:** Provides answers to general questions, latest news, and more.
+- **Customizable Responses:** Tailor Gemini's responses to suit your needs.
 
 ## Installation
 
@@ -24,7 +24,7 @@ Follow these steps to set up Gemini on your local machine:
 
     ```bash
     git clone https://github.com/Deshraj-Tiwari-Official/Gemini.git
-    cd gemini
+    cd Gemini
     ```
 
 2. **Install Dependencies**
@@ -33,8 +33,17 @@ Follow these steps to set up Gemini on your local machine:
     pip install -r requirements.txt
     ```
 
+3. **Add Your News API Key**
 
-3. **Run the Bot**
+   Gemini requires a News API key to fetch the latest news headlines. Sign up at [NewsAPI](https://newsapi.org/) to get your API key. Then, add your API key to your environment variables or directly into the script where it's required.
+
+    ```python
+    NEWS_API = 'your_api_key_here'
+    ```
+   Create a .env file and add the api in the above format
+
+
+4. **Run Gemini**
 
     ```bash
     python main.py
@@ -44,28 +53,22 @@ Follow these steps to set up Gemini on your local machine:
 
 Once you have started the bot, you can interact with Gemini through the command line or voice commands (if enabled).
 
-### Command Line Interaction
-
-Type your queries directly into the command line interface where Gemini is running.
 
 ### Voice Interaction
 
-Gemini can also respond to voice commands if you have a microphone set up. Simply speak your queries and wait for Gemini to respond.
+Gemini responds to voice commands. Simply speak your queries and wait for Gemini to respond.
 
-## Contributing
+### Adding Your Favorite Songs
 
-We welcome contributions to enhance Gemini's functionality. To contribute:
+To add your favorite songs to Gemini's library, edit the `song_library.py` file. Add your songs in the following format:
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Make your changes.
-4. Commit your changes (`git commit -m 'Add some feature'`).
-5. Push to the branch (`git push origin feature-branch`).
-6. Create a new Pull Request.
+```python
+songs = {
+    "Despacito": "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+    "Shape of You": "https://www.youtube.com/watch?v=JGwWNGJdvx8",
+    # Add more songs here
+}
+```
 
+## [Command Cheatsheet](cheatsheet.md)
 
-## Acknowledgments
-
-- Thanks to the developers of the various libraries and APIs used in this project.
-- Special mention to the open-source community for their continuous support and contributions.
-- Thanks to Code With Harry and other content creators as well as online resources to provide needed information all the time.

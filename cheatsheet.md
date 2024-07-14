@@ -1,7 +1,30 @@
-# Chatbot Assistant Commands Cheatsheet
+# Gemini Assistant Commands Cheatsheet
 
-| Command                              | Description                               |
-|--------------------------------------|-------------------------------------------|
-| `show cheatsheet`                    | Provides a list of all available commands |
-| `gemini deactivate`                  | Deactivates the Gemini feature            |
-| `open google and search for [query]` | Searches the query on google              |
+## General Commands
+
+| Command                 | Description                                               |
+|-------------------------|-----------------------------------------------------------|
+| `gemini deactivate`     | Deactivates the Gemini feature                            |
+| `gemini quit`           | Shuts down the Gemini assistant                           |
+| `show cheatsheet`       | Opens this cheatsheet                                     |
+
+## Web Browsing Commands
+
+| Command                          | Description                                       |
+|----------------------------------|---------------------------------------------------|
+| `open google`                    | Opens Google in the default web browser           |
+| `google search for [query]`      | Searches the specified query on Google            |
+| `open youtube`                   | Opens YouTube in the default web browser          |
+| `youtube search for [query]`     | Searches the specified query on YouTube           |
+
+## Music Commands
+
+| Command             | Description                                                                                       |
+|---------------------|---------------------------------------------------------------------------------------------------|
+| `play [song]`       | Plays the specified song if it exists in the library. Otherwise, notifies the user and provides guidance. |
+
+## News Commands
+
+| Command                | Description                              |
+|------------------------|------------------------------------------|
+| `news headlines`       | Reads out the top 5 news headlines       |
