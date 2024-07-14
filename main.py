@@ -4,22 +4,63 @@ import speech_recognition as sr
 import os
 from gtts import gTTS
 import tempfile
+from song_library import songs
+import requests
+from dotenv import load_dotenv, dotenv_values
 
 recognizer = sr.Recognizer()
+load_dotenv()
+NEWS_API = dotenv_values(".env")["NEWS_API"]
 
 
 def response(prompt):
     if "gemini deactivate" in prompt:
         speak("Ok, If you want to call me again, say Hey Gemini.")
 
+    elif "gemini quit" in prompt:
+        speak("Thanks for using Gemini. Shutting down the assistant. Good Bye!!")
+        exit()
+
     elif "show cheat sheet" in prompt:
+        speak("Opening cheatsheet...")
         webbrowser.open("https://github.com/Deshraj-Tiwari-Official/Gemini/blob/main/cheatsheet.md")
 
-    elif "google search for " in prompt:
+    elif "open google" in prompt:
+        speak("Opening Google")
+        webbrowser.open("https://google.com")
+
+    elif "google search for" in prompt:
         search_term = prompt.replace("google search for ", "")
+        speak(f"Searching for {search_term} on Google...")
         webbrowser.open(f"https://google.com/search?q={search_term}")
+
+    elif "open youtube" in prompt:
+        speak("Opening YouTube")
+        webbrowser.open("https://youtube.com")
+
+    elif "youtube search for" in prompt:
+        search_term = prompt.replace("youtube search for ", "")
+        speak(f"Searching for {search_term} on YouTube...")
+        webbrowser.open(f"https://youtube.com/results?search_query={search_term}")
+
+    elif prompt.startswith("play "):
+        song = prompt.replace("play ", "")
+        if song in songs:
+            speak(f"Playing {song} on youtube...")
+            webbrowser.open(songs[song])
+        else:
+            speak("There is no such song in the library. Try again by saying Gemini Activate")
+
+    elif "news headlines" in prompt:
+        speak("Here are the top 5 headlines...")
+        url = f'https://newsapi.org/v2/top-headlines?country=in&apiKey={NEWS_API}'
+        res = requests.get(url)
+        data = res.json()
+        for i in range(0, 5):
+            speak(data["articles"][i]["title"])
+
     else:
-        speak("I didn't get that. Try again by saying Gemini.")
+        speak("I didn't get that. Try again by saying Gemini Activate.")
         play("./audios/gemini_start.mp3")
 
 
@@ -55,7 +96,7 @@ def listen_for_wake_word():
                 call_command = call_command.lower()
                 print(call_command)
 
-                if "hey gemini" in call_command:
+                if "gemini activate" in call_command:
                     return True
         except sr.UnknownValueError:
             print("Sorry, I didn't understand that.")
@@ -68,7 +109,7 @@ def listen_for_wake_word():
 
 
 if __name__ == "__main__":
-    speak("Say Hey Gemini anytime to call for me. Enjoy your time.")
+    speak("Say \"Gemini Activate\" anytime to call for me. Enjoy your time.")
     play("./audios/gemini_start.mp3")
 
     while True:
@@ -87,7 +128,7 @@ if __name__ == "__main__":
                         print(">>", command)
                         response(command)
                     except sr.UnknownValueError or sr.WaitTimeoutError:
-                        speak("Speech not detected. Please try again.")
+                        speak("Speech not detected. Try again by saying Gemini Activate.")
                     except sr.RequestError:
                         speak("Sorry, I'm currently facing some technical issue.")
             except Exception as e:
